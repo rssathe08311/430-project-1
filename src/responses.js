@@ -48,12 +48,39 @@ const notFound = (request, response) => {
 
 //GET Requests
 
-const getBooks = (request, response) => {
+const getBooks = (request, response, parsedUrl) => {
+  const limit = parsedUrl.searchParams.get('limit') || books.length;
+  const responseJSON = {books: books.slice(0,limit)};
 
+  if(request.method === 'HEAD'){
+    return respondJSON(request, response, 200, {});
+  }
+
+  return respondJSON(request, response, 200, responseJSON);
 };
 
 const getAuthor = (request, response) => {
+  const author = parsedUrl.searchParams.get('author');
+  const filteredBooks = books.filter((book) => book.author === author);
 
+  if (filteredBooks.length === 0) {
+    let responseJSON = {
+      message: 'No books found for the author',
+      id: 'getAuthor',
+    }
+    if(request.method === 'HEAD'){
+      return respondJSON(request, response, 404, {});
+    }
+    else{
+      return respondJSON(request, response, 404, respondJSON);
+    }
+  }
+
+  if(request.method === 'HEAD'){
+    return respondJSON(request, response, 200, {});
+  }
+
+  return respondJSON(request, response, 200, { books: filteredBooks });
 };
 
 const getTitle = (request, response) => {
