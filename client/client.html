@@ -3,135 +3,135 @@
 <head>
   <title>Our simple HTTP server</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
-  
-  <script>
-    const handleResponse = async (response, parseResponse) => {
-      const content = document.querySelector('#content');
-      content.innerHTML = '';
+  <script src="client.js"></script>
 
-
-      switch(response.status) {
-        case 200:
-          content.innerHTML = `<b>Success</b>`;
-          break;
-        case 201:
-          content.innerHTML = `<b>Created</b>`;
-          break;
-        case 204:
-          content.innerHTML = `<b>Updated (No Content)</b>`;
-          break;
-        case 400:
-          content.innerHTML = `<b>Bad Request</b>`;
-          break;
-        case 404:
-          content.innerHTML = `<b>Not Found</b>`;
-          break;
-        default:
-          content.innerHTML = `Error code not implemented by client.`;
-          break;
-      }
-
-      if(parseResponse && response.status !== 204) {
-        const obj = await response.json();
-        if(obj.message) {
-          content.innerHTML += `<p>Message: ${obj.message}</p>`;
-        }
-        else {
-          content.innerHTML += `<p>${JSON.stringify(obj)}</p>`;
-        }
-      }
-      else {
-        console.log("Meta data recieved ")
-      }
-    };
-
-    const requestUpdate = async (userForm) => {
-      const url = userForm.querySelector('#urlField').value;
-      const method = userForm.querySelector('#methodSelect').value;
-
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
-
-      handleResponse(response, method.toLowerCase() === 'get');
-    }
-
-    const sendPost = async (nameForm) => {
-      const url = nameForm.getAttribute('action');
-      const nameField = nameForm.querySelector('#nameField');
-      const ageField = nameForm.querySelector('#ageField');
-
-      const formData = `name=${nameField.value}&age=${ageField.value}`;
-
-      try {
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json',
-          },
-          body: formData,
-        });
-
-        await handleResponse(response, true);
-        return;
-      } catch (error) {
-        console.error('Error in POST request:', error);
-        const content = document.querySelector('#content');
-        content.innerHTML = '<b>There was an error with the request.</b>';
-      }
-
-    }
-
-    const init = () => {
-      const userForm = document.querySelector('#userForm');
-      const nameForm = document.querySelector('#nameForm');
-
-      // Handling GET/HEAD requests
-      userForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        requestUpdate(userForm);
-        return false;
-      });
-
-      // handle Post requests
-      nameForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        sendPost(nameForm);
-        return false;
-      });
-    };
-
-    window.onload = init;
-
-  </script>
 </head>
 <body>
-  <section id="top">
-    <h3>POST Status Code Tests</h3>
-    <form id="nameForm" action="/addUser" method="post">
-      <label for="name">Name: </label>
-      <input id="nameField" type="text" name="name" />
-      <label for="age">Age: </label>
-      <input id="ageField" type="number" name="age" min="0" max="100" step="1"/>
-      <input type="submit" value="Add User" />
-    </form>
-    <form id="userForm" action="/getUsers" method="get">
-      <select id='urlField'>
-        <option value='/getUsers'>/getUsers</option>
-        <option value='/notReal'>/notReal</option>
-      </select>
-      <select id="methodSelect">
-        <option value="get">GET</option>
-        <option value="head">HEAD</option>
-      </select>
-      <input type="submit" value="Get User" />
-    </form>
-  </section>
-  <section id="content">
-  </section>
+  <div id="mainContent">
+    <h1>Book API Frontend</h1>
+  </div>
+
+  <!-- Use Austin's example for an idea of what to do-->
+
+  <div class="mainContent">
+    <a href="/docs">API Documentation</a>
+    <h1>Test Movie API</h1>
+
+    <div class="endpoint">
+      <h2 class="collapsible">
+        /api/getFilmTitles <span class="methods"><code>GET</code> <code>HEAD</code></span>
+      </h2>
+      <div class="content">
+        <div class="content-box">
+          <h3>Test This Endpoint</h3>
+          <form data-method="GET" data-endpoint="/api/getFilmTitles">
+            <label>Actor: <input type="text" name="actor"></label><br>
+            <label>Year: <input type="text" name="year"></label><br>
+            <label><input type="radio" name="method" value="GET" checked> GET</label>
+            <label><input type="radio" name="method" value="HEAD"> HEAD</label><br>
+            <button type="submit">Send Request</button>
+          </form>
+          <pre class="result"></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="collapsible">
+        /api/getFilms <span class="methods"><code>GET</code> <code>HEAD</code></span>
+      </h2>
+      <div class="content">
+        <div class="content-box">
+          <h3>Test This Endpoint</h3>
+          <form data-method="GET" data-endpoint="/api/getFilms">
+            <label>Title: <input type="text" name="title"></label><br>
+            <label>Actor: <input type="text" name="actor"></label><br>
+            <label>Year: <input type="text" name="year"></label><br>
+            <label><input type="radio" name="method" value="GET" checked> GET</label>
+            <label><input type="radio" name="method" value="HEAD"> HEAD</label><br>
+            <button type="submit">Send Request</button>
+          </form>
+          <pre class="result"></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="collapsible">
+        /api/getFilm <span class="methods"><code>GET</code> <code>HEAD</code></span>
+      </h2>
+      <div class="content">
+        <div class="content-box">
+          <h3>Test This Endpoint</h3>
+          <form data-method="GET" data-endpoint="/api/getFilm">
+            <label>Title: <input type="text" name="title"></label><br>
+            <label><input type="radio" name="method" value="GET" checked> GET</label>
+            <label><input type="radio" name="method" value="HEAD"> HEAD</label><br>
+            <button type="submit">Send Request</button>
+          </form>
+          <pre class="result"></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="collapsible">
+        /api/getAllFilms <span class="methods"><code>GET</code> <code>HEAD</code></span>
+      </h2>
+      <div class="content">
+        <div class="content-box">
+          <h3>Test This Endpoint</h3>
+          <form data-method="GET" data-endpoint="/api/getAllFilms">
+            <label><input type="radio" name="method" value="GET" checked> GET</label>
+            <label><input type="radio" name="method" value="HEAD"> HEAD</label><br>
+            <button type="submit">Send Request</button>
+          </form>
+          <pre class="result"></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="collapsible">
+        /api/addFilm <span class="methods"><code>POST</code></span>
+      </h2>
+      <div class="content">
+        <div class="content-box">
+          <h3>Test This Endpoint</h3>
+          <form data-method="POST" data-endpoint="/api/addFilm">
+            <label>Title: <input type="text" name="title"></label><br>
+            <label>Year: <input type="text" name="year"></label><br>
+            <label>Genres: <input type="text" name="genres"></label><br>
+            <label>Cast: <input type="text" name="cast"></label><br>
+            <button type="submit">Send Request</button>
+          </form>
+          <pre class="result"></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="collapsible">
+        /api/rateFilm <span class="methods"><code>POST</code></span>
+      </h2>
+      <div class="content">
+        <div class="content-box">
+          <h3>Test This Endpoint</h3>
+          <form data-method="POST" data-endpoint="/api/rateFilm">
+            <label>Title: <input type="text" name="title"></label><br>
+            <label>Rating: <input type="number" name="rating" min="1" max="5"></label><br>
+            <button type="submit">Send Request</button>
+          </form>
+          <pre class="result"></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  ,<footer>
+    Reva Sathe - <strong href="docs.html">API Documentation</strong>
+  </footer>
 </body>
 </html>

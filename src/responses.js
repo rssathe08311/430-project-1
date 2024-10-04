@@ -71,12 +71,12 @@ const getAuthor = (request, response) => {
     if(request.method === 'HEAD'){
       return respondJSON(request, response, 404, {});
     }
-    else{
+    else {
       return respondJSON(request, response, 404, respondJSON);
     }
   }
 
-  if(request.method === 'HEAD'){
+  if(request.method === 'HEAD') {
     return respondJSON(request, response, 200, {});
   }
 
