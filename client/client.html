@@ -3,135 +3,134 @@
 <head>
   <title>Our simple HTTP server</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
-  <script src="client.js"></script>
+  <script src="/client.js"></script>
 
 </head>
 <body>
-  <div id="mainContent">
-    <h1>Book API Frontend</h1>
-  </div>
 
-  <!-- Use Austin's example for an idea of what to do-->
+  <!-- Use Austin's example as a basic template for organization-->
 
   <div class="mainContent">
-    <a href="/docs">API Documentation</a>
-    <h1>Test Movie API</h1>
+    <h1>Book API Frontend</h1>
 
     <div class="endpoint">
       <h2 class="collapsible">
-        /api/getFilmTitles <span class="methods"><code>GET</code> <code>HEAD</code></span>
+        /api/getBooks <span class="methods"><code>GET</code> <code>HEAD</code></span>
       </h2>
       <div class="content">
         <div class="content-box">
           <h3>Test This Endpoint</h3>
-          <form data-method="GET" data-endpoint="/api/getFilmTitles">
-            <label>Actor: <input type="text" name="actor"></label><br>
-            <label>Year: <input type="text" name="year"></label><br>
+          <form data-method="GET" data-endpoint="/getBooks">
+            <label>Limit: <input type="number" name="limit" min="1"></label><br>
             <label><input type="radio" name="method" value="GET" checked> GET</label>
             <label><input type="radio" name="method" value="HEAD"> HEAD</label><br>
             <button type="submit">Send Request</button>
+            <pre class="result"></pre>
           </form>
-          <pre class="result"></pre>
         </div>
       </div>
     </div>
 
     <div class="endpoint">
       <h2 class="collapsible">
-        /api/getFilms <span class="methods"><code>GET</code> <code>HEAD</code></span>
+        /getAuthor <span class="methods"><code>GET</code> <code>HEAD</code></span>
       </h2>
       <div class="content">
         <div class="content-box">
           <h3>Test This Endpoint</h3>
-          <form data-method="GET" data-endpoint="/api/getFilms">
-            <label>Title: <input type="text" name="title"></label><br>
-            <label>Actor: <input type="text" name="actor"></label><br>
-            <label>Year: <input type="text" name="year"></label><br>
+          <form data-method="GET" data-endpoint="/getAuthor">
+            <label>Author: <input type="text" name="author"></label><br>
             <label><input type="radio" name="method" value="GET" checked> GET</label>
             <label><input type="radio" name="method" value="HEAD"> HEAD</label><br>
             <button type="submit">Send Request</button>
+            <pre class="result"></pre>
           </form>
-          <pre class="result"></pre>
         </div>
       </div>
     </div>
 
     <div class="endpoint">
       <h2 class="collapsible">
-        /api/getFilm <span class="methods"><code>GET</code> <code>HEAD</code></span>
+        /getTitle <span class="methods"><code>GET</code> <code>HEAD</code></span>
       </h2>
       <div class="content">
         <div class="content-box">
           <h3>Test This Endpoint</h3>
-          <form data-method="GET" data-endpoint="/api/getFilm">
+          <form data-method="GET" data-endpoint="/getTitle">
             <label>Title: <input type="text" name="title"></label><br>
             <label><input type="radio" name="method" value="GET" checked> GET</label>
             <label><input type="radio" name="method" value="HEAD"> HEAD</label><br>
             <button type="submit">Send Request</button>
+            <pre class="result"></pre>
           </form>
-          <pre class="result"></pre>
         </div>
       </div>
     </div>
 
     <div class="endpoint">
       <h2 class="collapsible">
-        /api/getAllFilms <span class="methods"><code>GET</code> <code>HEAD</code></span>
+          /getReviews <span class="methods"><code>GET</code></span>
       </h2>
       <div class="content">
-        <div class="content-box">
-          <h3>Test This Endpoint</h3>
-          <form data-method="GET" data-endpoint="/api/getAllFilms">
-            <label><input type="radio" name="method" value="GET" checked> GET</label>
-            <label><input type="radio" name="method" value="HEAD"> HEAD</label><br>
-            <button type="submit">Send Request</button>
-          </form>
-          <pre class="result"></pre>
-        </div>
+          <div class="content-box">
+              <h3>Test This Endpoint</h3>
+              <form data-method="GET" data-endpoint="/getReviews">
+                  <label>Book Title: <input type="text" name="title"></label><br>
+                  <label><input type="radio" name="method" value="GET" checked> GET</label>
+                  <label><input type="radio" name="method" value="HEAD"> HEAD</label><br>
+                  <button type="submit">Send Request</button>
+                  <pre class="result"></pre>
+              </form>
+          </div>
       </div>
-    </div>
-
-    <div class="endpoint">
-      <h2 class="collapsible">
-        /api/addFilm <span class="methods"><code>POST</code></span>
-      </h2>
-      <div class="content">
-        <div class="content-box">
-          <h3>Test This Endpoint</h3>
-          <form data-method="POST" data-endpoint="/api/addFilm">
-            <label>Title: <input type="text" name="title"></label><br>
-            <label>Year: <input type="text" name="year"></label><br>
-            <label>Genres: <input type="text" name="genres"></label><br>
-            <label>Cast: <input type="text" name="cast"></label><br>
-            <button type="submit">Send Request</button>
-          </form>
-          <pre class="result"></pre>
-        </div>
-      </div>
-    </div>
-
-    <div class="endpoint">
-      <h2 class="collapsible">
-        /api/rateFilm <span class="methods"><code>POST</code></span>
-      </h2>
-      <div class="content">
-        <div class="content-box">
-          <h3>Test This Endpoint</h3>
-          <form data-method="POST" data-endpoint="/api/rateFilm">
-            <label>Title: <input type="text" name="title"></label><br>
-            <label>Rating: <input type="number" name="rating" min="1" max="5"></label><br>
-            <button type="submit">Send Request</button>
-          </form>
-          <pre class="result"></pre>
-        </div>
-      </div>
-    </div>
   </div>
 
+    <div class="endpoint">
+      <h2 class="collapsible">
+        /addBook <span class="methods"><code>POST</code></span>
+      </h2>
+      <div class="content">
+        <div class="content-box">
+          <h3>Test This Endpoint</h3>
+          <form data-method="POST" data-endpoint="/addBook">
+            <label>Title: <input type="text" name="title"></label><br>
+            <label>Author: <input type="text" name="author"></label><br>
+            <label>Year: <input type="number" name="year"></label><br>
+            <label>Country: <input type="text" name="country"></label><br>
+            <label>Language: <input type="text" name="language"></label><br>
+            <label>Genres: <input type="text" name="genres"></label><br>
+            <label>Pages: <input type="number" name="pages"></label><br>
+            <label>Link: <input type="text" name="link"></label><br>
+            <button type="submit">Send Request</button>
+            <pre class="result"></pre>
+          </form>
+        </div>
+      </div>
+    </div>
 
+    <div class="endpoint"></div>
+      <h2 class="collapsible">
+          /addReview <span class="methods"><code>POST</code></span>
+      </h2>
+      <div class="content">
+          <div class="content-box">
+              <h3>Test This Endpoint</h3>
+              <form data-method="POST" data-endpoint="/addReview">
+                  <label>Book Title: <input type="text" name="title"></label><br>
+                  <label>Review Text: <input type="text" name="review"></label><br>
+                  <label>Rating: <input type="number" name="rating" min="1" max="5"></label><br>
+                  <button type="submit">Send Request</button>
+                  <pre class="result"></pre>
+              </form>
+          </div>
+      </div>
+  </div>
+  </div>
 
-  ,<footer>
-    Reva Sathe - <strong href="docs.html">API Documentation</strong>
+    
+
+  <footer>
+    Reva Sathe - <a href="docs.html">API Documentation</a>
   </footer>
 </body>
 </html>
