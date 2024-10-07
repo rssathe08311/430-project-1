@@ -12,7 +12,7 @@
   "dependencies": {},
   "scripts": {
     "start": "node ./src/server.js",
-    "pretest": "eslint ./src --fix",
+    "pretest": "eslint ./src ./client --fix",
     "test": "echo \"Tests complete\"",
     "nodemon": "nodemon -e js,html,css --watch ./src --watch ./hosted ./src/server.js"
   },

@@ -92,7 +92,7 @@
       <div class="content">
         <div class="content-box">
           <h3>Test This Endpoint</h3>
-          <form data-method="POST" data-endpoint="/addBook">
+          <form data-method="POST" action="/addBook" data-endpoint="/addBook">
             <label>Title: <input type="text" name="title"></label><br>
             <label>Author: <input type="text" name="author"></label><br>
             <label>Year: <input type="number" name="year"></label><br>
@@ -115,7 +115,7 @@
       <div class="content">
           <div class="content-box">
               <h3>Test This Endpoint</h3>
-              <form data-method="POST" data-endpoint="/addReview">
+              <form data-method="POST" action="/addReview" data-endpoint="/addReview">
                   <label>Book Title: <input type="text" name="title"></label><br>
                   <label>Review Text: <input type="text" name="review"></label><br>
                   <label>Rating: <input type="number" name="rating" min="1" max="5"></label><br>
