@@ -19,6 +19,9 @@ const handleResponse = async (response, parseResponse, contentRef) => {
     case 404:
       content.innerHTML = '<b>Not Found</b>';
       break;
+    case 409:
+      content.innerHTML = '<b>Already Exists</b>';
+      break;
     default:
       content.innerHTML = 'Error code not implemented by client.';
       break;

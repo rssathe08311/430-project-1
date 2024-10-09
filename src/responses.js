@@ -52,9 +52,9 @@ const notFound = (request, response) => {
 };
 
 // GET Requests
-const getBooks = (request, response, parsedUrl) => {
+const getBooks = (request, response) => {
   books = utils.getBooksJson();
-  const limit = parsedUrl.searchParams.get('limit') || books.length;
+  const limit = request.query.limit || books.length;
   const responseJSON = { books: books.slice(0, limit) };
 
   if (request.method === 'HEAD') {
@@ -64,9 +64,9 @@ const getBooks = (request, response, parsedUrl) => {
   return respondJSON(request, response, 200, responseJSON);
 };
 
-const getAuthor = (request, response, parsedUrl) => {
+const getAuthor = (request, response) => {
   books = utils.getBooksJson();
-  const author = parsedUrl.searchParams.get('author');
+  const author = request.query.author.toLowerCase();
 
   if (!author) {
     const responseJSON = {
@@ -76,7 +76,7 @@ const getAuthor = (request, response, parsedUrl) => {
     return respondJSON(request, response, 400, responseJSON);
   }
 
-  const filteredBooks = books.filter((book) => book.author.toLowerCase() === author.toLowerCase());
+  const filteredBooks = books.filter((book) => book.author.toLowerCase() === author);
 
   if (filteredBooks.length === 0) {
     const responseJSON = {
@@ -97,10 +97,10 @@ const getAuthor = (request, response, parsedUrl) => {
   return respondJSON(request, response, 200, { books: filteredBooks });
 };
 
-const getTitle = (request, response, parsedUrl) => {
+const getTitle = (request, response) => {
   books = utils.getBooksJson();
-  const title = parsedUrl.searchParams.get('title');
-  const filteredBooks = books.filter((book) => book.title.toLowerCase() === title.toLowerCase());
+  const title = request.query.title.toLowerCase();
+  const filteredBooks = books.filter((book) => book.title.toLowerCase() === title);
 
   if (filteredBooks.length === 0) {
     const responseJSON = {
@@ -121,9 +121,9 @@ const getTitle = (request, response, parsedUrl) => {
   return respondJSON(request, response, 200, { books: filteredBooks });
 };
 
-const getReviews = (request, response, parsedUrl) => {
+const getReviews = (request, response) => {
   const reviews = utils.getReviewsJson();
-  const title = parsedUrl.searchParams.get('title').toLowerCase();
+  const title = request.query.title.toLowerCase();
 
   // Check for missing title parameter
   if (!title) {

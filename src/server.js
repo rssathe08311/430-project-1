@@ -128,17 +128,18 @@ const handleGetHead = (request, response, parsedUrl) => {
   } else if (parsedUrl.pathname === '/style.css') {
     responseHandler.getCSS(request, response);
   } else if (parsedUrl.pathname === '/getBooks') {
-    responseHandler.getBooks(request, response, parsedUrl);
+    console.log(request.query);
+    responseHandler.getBooks(request, response);
   } else if (parsedUrl.pathname === '/getAuthor') {
-    responseHandler.getAuthor(request, response, parsedUrl);
+    responseHandler.getAuthor(request, response);
   } else if (parsedUrl.pathname === '/client.js') { // Add this block
     response.writeHead(200, { 'Content-Type': 'application/javascript' });
     response.write(clientScript);
     response.end();
   } else if (parsedUrl.pathname === '/getTitle') {
-    responseHandler.getTitle(request, response, parsedUrl);
+    responseHandler.getTitle(request, response);
   } else if (parsedUrl.pathname === '/getReviews') {
-    responseHandler.getReviews(request, response, parsedUrl);
+    responseHandler.getReviews(request, response);
   } else {
     responseHandler.notFound(request, response);
   }
@@ -157,6 +158,8 @@ const handlePost = (request, response, parsedUrl) => {
 const onRequest = (request, response) => {
   const protocol = request.connection.encrypted ? 'https' : 'http';
   const parsedUrl = new URL(request.url, `${protocol}://${request.headers.host}`);
+
+  request.query = Object.fromEntries(parsedUrl.searchParams);
 
   if (request.method === 'POST') {
     handlePost(request, response, parsedUrl);

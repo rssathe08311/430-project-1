@@ -18,5 +18,10 @@
     "title": "test 2",
     "review": "testing :)",
     "rating": "5"
+  },
+  {
+    "title": "Fairy tales",
+    "review": "Baller",
+    "rating": "5"
   }
 ]
