@@ -1,20 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Our simple HTTP server</title>
+  <title>Book API Documentation</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
-  <script src="client.js"></script>
-
 </head>
 <body>
-  <div id="mainContent">
-    <h1>:)</h1>
+
+  <div class="mainContent">
+    <h1>Book API Documentation</h1>
+
+    <div class="endpoint">
+      <h2 class="collapsible">
+        /api/getBooks <span class="methods"><code>GET</code> <code>HEAD</code></span>
+      </h2>
+      <div class="content">
+        <div class="content-box">
+          <h3>Query Params</h3>
+          <p class="param"><code>Limit</code> (optional) - The number of books a user wants to see</p>
+          <h3>Returns</h3>
+          <p class="param">A JSON array of books. Format: <code>[{ author: 'author1', country: ['country1', 'country2', etc...], language: 'language1', link: 'link', pages: #pages, title: 'title1', year: 'year', genres: ['genre1', "genre2", etc..]}]</code></p>
+          <h3>Examples</h3>
+          <section class="example">
+            <p>Request: <code>/api/getBooks?limit=1</code></p>
+            <p>Result: <code>[{ author: 'author1', country: ['country1', 'country2', etc...], language: 'language1', link: 'link', pages: #pages, title: 'title1', year: 'year', genres: ['genre1', "genre2", etc..]}]</code></p>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="collapsible">
+        /getAuthor <span class="methods"><code>GET</code> <code>HEAD</code></span>
+      </h2>
+      <div class="content">
+        <div class="content-box">
+          <h3>Query Params</h3>
+          <p class="param"><code>author</code> - An author's name to filter by.</p>
+          <h3>Returns</h3>
+          <p class="param">A JSON array of books. Format: <code>[{ author: 'author1', country: ['country1', 'country2', etc...], language: 'language1', link: 'link', pages: #pages, title: 'title1', year: 'year', genres: ['genre1', "genre2", etc..]}]</code></p>
+          <h3>Examples</h3>
+          <section class="example">
+            <p>Request: <code>/api/getAuthor?author=author1</code></p>
+            <p>Result: <code>[{ author: 'author1', country: ['country1', 'country2', etc...], language: 'language1', link: 'link', pages: #pages, title: 'title1', year: 'year', genres: ['genre1', "genre2", etc..]}]</code></p>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="collapsible">
+        /getTitle <span class="methods"><code>GET</code> <code>HEAD</code></span>
+      </h2>
+      <div class="content">
+        <div class="content-box">
+          <h3>Query Params</h3>
+          <p class="param"><code>title</code> - A book's title to filter by.</p>
+          <h3>Returns</h3>
+          <p class="param">A JSON array of books with matching titles.</p>
+          <h3>Examples</h3>
+          <section class="example">
+            <p>Request: <code>/api/getTitle?title=BookTitle</code></p>
+            <p>Result: <code>[{ author: 'author1', country: ['country1', 'country2'], language: 'language1', link: 'link', pages: #pages, title: 'BookTitle', year: 'year', genres: ['genre1', 'genre2'] }]</code></p>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="collapsible">
+        /getReviews <span class="methods"><code>GET</code></span>
+      </h2>
+      <div class="content">
+        <div class="content-box">
+          <h3>Query Params</h3>
+          <p class="param"><code>title</code> - The title of the book to get reviews for.</p>
+          <h3>Returns</h3>
+          <p class="param">A JSON array of reviews. Format: <code>[{ title: 'BookTitle', reviews: [{ review: 'review text', rating: #rating }] }]</code></p>
+          <h3>Examples</h3>
+          <section class="example">
+            <p>Request: <code>/api/getReviews?title=BookTitle</code></p>
+            <p>Result: <code>[{ title: 'BookTitle', reviews: [{ review: 'Great book!', rating: 5 }, { review: 'Enjoyed it.', rating: 4 }] }]</code></p>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="collapsible">
+        /addBook <span class="methods"><code>POST</code></span>
+      </h2>
+      <div class="content">
+        <div class="content-box">
+          <h3>Body Params</h3>
+          <p class="param"><code>title</code> - The title of the book.</p>
+          <p class="param"><code>author</code> - The author of the book.</p>
+          <p class="param"><code>year</code> - The publication year.</p>
+          <p class="param"><code>country</code> - The country of origin.</p>
+          <p class="param"><code>language</code> - The language of the book.</p>
+          <p class="param"><code>genres</code> - An array of genres.</p>
+          <p class="param"><code>pages</code> - The number of pages.</p>
+          <p class="param"><code>link</code> - A link to more information.</p>
+          <h3>Returns</h3>
+          <p class="param">A success message confirming the book was added.</p>
+          <h3>Examples</h3>
+          <section class="example">
+            <p>Request Body: <code>{ title: 'New Book', author: 'Author Name', year: 2024, country: 'Country', language: 'English', genres: ['Fiction'], pages: 350, link: 'example.com' }</code></p>
+            <p>Result: <code>Book added successfully!</code></p>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <h2 class="collapsible">
+        /addReview <span class="methods"><code>POST</code></span>
+      </h2>
+      <div class="content">
+        <div class="content-box">
+          <h3>Body Params</h3>
+          <p class="param"><code>title</code> - The title of the book being reviewed.</p>
+          <p class="param"><code>review</code> - The review text.</p>
+          <p class="param"><code>rating</code> - A rating between 1 and 5.</p>
+          <h3>Returns</h3>
+          <p class="param">A success message confirming the review was added.</p>
+          <h3>Examples</h3>
+          <section class="example">
+            <p>Request Body: <code>{ title: 'BookTitle', review: 'Amazing read!', rating: 5 }</code></p>
+            <p>Result: <code>Review added successfully!</code></p>
+          </section>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-
-
-  ,<footer>
-    Reva Sathe - <a href="client.html">Client Page</a>
+  <footer>
+    Reva Sathe - <a href="client.html">Main Page</a>
   </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const collapsibles = document.querySelectorAll(".collapsible");
+
+      collapsibles.forEach(collapsible => {
+        collapsible.addEventListener("click", function () {
+          this.classList.toggle("active");
+
+          const content = this.nextElementSibling;
+          if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+          } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+          }
+        });
+      });
+
+      // Adjust box size dynamically after form submission or content updates
+      const forms = document.querySelectorAll("form");
+
+      forms.forEach(form => {
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const contentBox = this.closest(".content-box");
+          if (contentBox) {
+            const initialHeight = contentBox.scrollHeight;
+            contentBox.style.maxHeight = initialHeight + "px";
+            contentBox.style.maxHeight = contentBox.scrollHeight + "px";
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

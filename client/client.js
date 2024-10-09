@@ -1,3 +1,42 @@
+// HTML functionality
+document.addEventListener("DOMContentLoaded", function () {
+  const collapsibles = document.querySelectorAll(".collapsible");
+
+  collapsibles.forEach(collapsible => {
+    collapsible.addEventListener("click", function () {
+      this.classList.toggle("active");
+
+      const content = this.nextElementSibling;
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    });
+  });
+
+  // Adjust box size dynamically after form submission or content updates
+  const forms = document.querySelectorAll("form");
+
+  forms.forEach(form => {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const content = form.closest(".content");
+
+      const result = form.querySelector('.result');
+      result.textContent = "New content added after form submission!";
+      
+      setTimeout(() => {
+        content.style.maxHeight = content.scrollHeight + "px";
+      }, 100); 
+    });
+  });
+});
+
+
+
+
 const handleResponse = async (response, parseResponse, contentRef) => {
   // const content = form.querySelector('.result');
   const content = contentRef;

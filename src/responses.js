@@ -3,6 +3,7 @@ const utils = require('../data/utils.js');
 
 const index = fs.readFileSync(`${__dirname}/../client/client.html`);
 const style = fs.readFileSync(`${__dirname}/../client/style.css`);
+const docs = fs.readFileSync(`${__dirname}/../client/docs.html`);
 
 let books = [];
 
@@ -12,6 +13,16 @@ const getIndex = (request, response) => {
 
   if (request.method !== 'HEAD') {
     response.write(index);
+  }
+
+  response.end();
+};
+
+const getDocs = (request, response) => {
+  response.writeHead(200, { 'Content-Type': 'text/html' });
+
+  if (request.method !== 'HEAD') {
+    response.write(docs);
   }
 
   response.end();
@@ -165,8 +176,11 @@ const addBook = (request, response) => {
     return respondJSON(request, response, 400, responseJSON);
   }
 
+  const tempTitle = newBook.title.toLowerCase();
+  const tempAuthor = newBook.author.toLowerCase();
+
   const existingBook = books.find(
-    (book) => book.title === newBook.title && book.author === newBook.author,
+    (book) => book.title.toLowerCase() === tempTitle && book.author.toLowerCase() === tempAuthor,
   );
 
   if (existingBook) {
@@ -227,7 +241,9 @@ const addReview = (request, response) => {
     return respondJSON(request, response, 400, responseJSON);
   }
 
-  const bookExists = books.find((book) => book.title === newReview.title);
+  const tempTitle = newReview.title.toLowerCase();
+
+  const bookExists = books.find((book) => book.title.toLowerCase() === tempTitle);
 
   if (!bookExists) {
     const responseJSON = {
@@ -266,6 +282,7 @@ const addReview = (request, response) => {
 
 module.exports = {
   getIndex,
+  getDocs,
   getCSS,
   getBooks,
   getAuthor,

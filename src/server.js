@@ -123,8 +123,10 @@ const parseReviewBody = (request, response, handler) => {
 };
 
 const handleGetHead = (request, response, parsedUrl) => {
-  if (parsedUrl.pathname === '/') {
+  if (parsedUrl.pathname === '/' || parsedUrl.pathname === '/client.html') {
     responseHandler.getIndex(request, response);
+  } else if (parsedUrl.pathname === '/docs.html') {
+    responseHandler.getDocs(request, response);
   } else if (parsedUrl.pathname === '/style.css') {
     responseHandler.getCSS(request, response);
   } else if (parsedUrl.pathname === '/getBooks') {

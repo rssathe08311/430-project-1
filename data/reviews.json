@@ -23,5 +23,20 @@
     "title": "Fairy tales",
     "review": "Baller",
     "rating": "5"
+  },
+  {
+    "title": "The Passage",
+    "review": "Haven't read it yet",
+    "rating": "4"
+  },
+  {
+    "title": "Fairy tales",
+    "review": "test",
+    "rating": "3"
+  },
+  {
+    "title": "fairy tales",
+    "review": "does this work in lower case?",
+    "rating": "5"
   }
 ]

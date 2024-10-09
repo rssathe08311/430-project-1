@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Our simple HTTP server</title>
+  <title>Digital Book Catalog</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
   <script src="/client.js"></script>
 
@@ -11,7 +11,7 @@
   <!-- Use Austin's example as a basic template for organization-->
 
   <div class="mainContent">
-    <h1>Book API Frontend</h1>
+    <h1>Digital Book Catalog</h1>
 
     <div class="endpoint">
       <h2 class="collapsible">
@@ -22,8 +22,8 @@
           <h3>Test This Endpoint</h3>
           <form data-method="GET" data-endpoint="/getBooks">
             <label>Limit: <input type="number" name="limit" min="1"></label><br>
-            <label><input type="radio" name="method" value="GET" checked> GET</label>
-            <label><input type="radio" name="method" value="HEAD"> HEAD</label><br>
+            <label class="inline"><input type="radio" name="method" value="GET" checked> GET</label>
+            <label class="inline"><input type="radio" name="method" value="HEAD"> HEAD</label><br>
             <button type="submit">Send Request</button>
             <pre class="result"></pre>
           </form>
@@ -40,8 +40,8 @@
           <h3>Test This Endpoint</h3>
           <form data-method="GET" data-endpoint="/getAuthor">
             <label>Author: <input type="text" name="author"></label><br>
-            <label><input type="radio" name="method" value="GET" checked> GET</label>
-            <label><input type="radio" name="method" value="HEAD"> HEAD</label><br>
+            <label class="inline"><input type="radio" name="method" value="GET" checked> GET</label>
+            <label class="inline"><input type="radio" name="method" value="HEAD"> HEAD</label><br>
             <button type="submit">Send Request</button>
             <pre class="result"></pre>
           </form>
@@ -58,8 +58,8 @@
           <h3>Test This Endpoint</h3>
           <form data-method="GET" data-endpoint="/getTitle">
             <label>Title: <input type="text" name="title"></label><br>
-            <label><input type="radio" name="method" value="GET" checked> GET</label>
-            <label><input type="radio" name="method" value="HEAD"> HEAD</label><br>
+            <label class="inline"><input type="radio" name="method" value="GET" checked> GET</label>
+            <label class="inline"><input type="radio" name="method" value="HEAD"> HEAD</label><br>
             <button type="submit">Send Request</button>
             <pre class="result"></pre>
           </form>
@@ -76,8 +76,8 @@
               <h3>Test This Endpoint</h3>
               <form data-method="GET" data-endpoint="/getReviews">
                   <label>Book Title: <input type="text" name="title"></label><br>
-                  <label><input type="radio" name="method" value="GET" checked> GET</label>
-                  <label><input type="radio" name="method" value="HEAD"> HEAD</label><br>
+                  <label class="inline"><input type="radio" name="method" value="GET" checked> GET</label>
+                  <label class="inline"><input type="radio" name="method" value="HEAD"> HEAD</label><br>
                   <button type="submit">Send Request</button>
                   <pre class="result"></pre>
               </form>
@@ -98,7 +98,7 @@
             <label>Year: <input id="yearData" type="number" name="year"></label><br>
             <label>Country: <input id="countryData" type="text" name="country"></label><br>
             <label>Language: <input id="languageData" type="text" name="language"></label><br>
-            <label>Genres: <input id="genresData" type="text" name="genres"></label><br>
+            <label>Genre: <input id="genresData" type="text" name="genres"></label><br>
             <label>Pages: <input id="pagesData" type="number" name="pages"></label><br>
             <label>Link: <input id="linkData" type="text" name="link"></label><br>
             <button type="submit">Send Request</button>
