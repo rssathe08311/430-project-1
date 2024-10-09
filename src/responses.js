@@ -155,6 +155,7 @@ const getReviews = (request, response, parsedUrl) => {
 const addBook = (request, response) => {
   const newBook = request.body;
   const booksFilePath = `${__dirname}/../data/books.json`;
+  books = utils.getBooksJson();
 
   if (!newBook.title || !newBook.author || !newBook.year || !newBook.genres) {
     const responseJSON = {
@@ -162,6 +163,18 @@ const addBook = (request, response) => {
       id: 'missingParams',
     };
     return respondJSON(request, response, 400, responseJSON);
+  }
+
+  const existingBook = books.find(
+    (book) => book.title === newBook.title && book.author === newBook.author,
+  );
+
+  if (existingBook) {
+    const responseJSON = {
+      message: 'Book already exists.',
+      id: 'bookExists',
+    };
+    return respondJSON(request, response, 409, responseJSON);
   }
 
   books.push({
@@ -203,6 +216,7 @@ const addBook = (request, response) => {
 
 const addReview = (request, response) => {
   const newReview = request.body;
+  books = utils.getBooksJson();
 
   // Check for required fields
   if (!newReview.title || !newReview.review || !newReview.rating) {
@@ -211,6 +225,16 @@ const addReview = (request, response) => {
       id: 'missingParams',
     };
     return respondJSON(request, response, 400, responseJSON);
+  }
+
+  const bookExists = books.find((book) => book.title === newReview.title);
+
+  if (!bookExists) {
+    const responseJSON = {
+      message: 'The book you are trying to review does not exist.',
+      id: 'bookNotFound',
+    };
+    return respondJSON(request, response, 404, responseJSON);
   }
 
   const reviews = utils.getReviewsJson();

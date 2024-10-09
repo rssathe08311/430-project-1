@@ -13,5 +13,10 @@
     "title": "test",
     "review": "test",
     "rating": "3"
+  },
+  {
+    "title": "test 2",
+    "review": "testing :)",
+    "rating": "5"
   }
 ]
