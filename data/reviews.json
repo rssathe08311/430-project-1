@@ -1,12 +1,17 @@
 [
-    {
-        "title": "Fairy tales",
-        "review": "Pretty Cool",
-        "rating": 5
-    },
-    {
-        "title": "The Divine Comedy",
-        "review": "Bible Fanfiction",
-        "rating": 4
-    }
+  {
+    "title": "Fairy tales",
+    "review": "Pretty Cool",
+    "rating": 5
+  },
+  {
+    "title": "The Divine Comedy",
+    "review": "Bible Fanfiction",
+    "rating": 4
+  },
+  {
+    "title": "test",
+    "review": "test",
+    "rating": "3"
+  }
 ]

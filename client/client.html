@@ -93,14 +93,14 @@
         <div class="content-box">
           <h3>Test This Endpoint</h3>
           <form data-method="POST" action="/addBook" data-endpoint="/addBook">
-            <label>Title: <input type="text" name="title"></label><br>
-            <label>Author: <input type="text" name="author"></label><br>
-            <label>Year: <input type="number" name="year"></label><br>
-            <label>Country: <input type="text" name="country"></label><br>
-            <label>Language: <input type="text" name="language"></label><br>
-            <label>Genres: <input type="text" name="genres"></label><br>
-            <label>Pages: <input type="number" name="pages"></label><br>
-            <label>Link: <input type="text" name="link"></label><br>
+            <label>Title: <input id="bookTitleData" type="text" name="title"></label><br>
+            <label>Author: <input id="authorData" type="text" name="author"></label><br>
+            <label>Year: <input id="yearData" type="number" name="year"></label><br>
+            <label>Country: <input id="countryData" type="text" name="country"></label><br>
+            <label>Language: <input id="languageData" type="text" name="language"></label><br>
+            <label>Genres: <input id="genresData" type="text" name="genres"></label><br>
+            <label>Pages: <input id="pagesData" type="number" name="pages"></label><br>
+            <label>Link: <input id="linkData" type="text" name="link"></label><br>
             <button type="submit">Send Request</button>
             <pre class="result"></pre>
           </form>
@@ -116,9 +116,9 @@
           <div class="content-box">
               <h3>Test This Endpoint</h3>
               <form data-method="POST" action="/addReview" data-endpoint="/addReview">
-                  <label>Book Title: <input type="text" name="title"></label><br>
-                  <label>Review Text: <input type="text" name="review"></label><br>
-                  <label>Rating: <input type="number" name="rating" min="1" max="5"></label><br>
+                  <label>Book Title: <input id="titleData" type="text" name="title"></label><br>
+                  <label>Review Text: <input id="reviewData" type="text" name="review"></label><br>
+                  <label>Rating: <input id="ratingData" type="number" name="rating" min="1" max="5"></label><br>
                   <button type="submit">Send Request</button>
                   <pre class="result"></pre>
               </form>

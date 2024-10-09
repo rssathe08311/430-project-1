@@ -67,27 +67,28 @@ const sendPost = async (form) => {
   const endpoint = form.getAttribute('data-endpoint');
   const url = form.getAttribute('action');
 
+  console.log(url);
+
   let formData = '';
 
-  if (url === '/addReview') {
-    const titleData = '';
-    formData = `title=${titleData.value}&age=${titleData.value}`;
+  if (url === '/addBook') {
+    const titleData = form.querySelector('#bookTitleData');
+    const authorData = form.querySelector('#authorData');
+    const yearData = form.querySelector('#yearData');
+    const countryData = form.querySelector('#countryData');
+    const languageData = form.querySelector('#languageData');
+    const genresData = form.querySelector('#genresData');
+    const pagesData = form.querySelector('#pagesData');
+    const linkData = form.querySelector('#linkData');
+    formData = `title=${titleData.value}&author=${authorData.value}&year=${yearData.value}&country=${countryData.value}
+                &language=${languageData.value}&genres=${genresData.value}&pages=${pagesData.value}&link=${linkData.value}`;
   } else {
     // put in proper info they dont have ids rn
-    const titleData = '';
-    const reviewData = '';
-    const ratingData = '';
+    const titleData = form.querySelector('#titleData');
+    const reviewData = form.querySelector('#reviewData');
+    const ratingData = form.querySelector('#ratingData');
     formData = `title=${titleData.value}&review=${reviewData.value}&rating=${ratingData.value}`;
   }
-
-  /*
-  const formData = new FormData(form);
-
-  const bodyData = {};
-  formData.forEach((value, key) => {
-    bodyData[key] = value;
-  });
-  */
 
   const content = form.querySelector('.result');
 
@@ -98,7 +99,7 @@ const sendPost = async (form) => {
         'Content-Type': 'application/x-www-form-urlencoded',
         Accept: 'application/json',
       },
-      body: JSON.stringify(bodyData),
+      body: formData,
     });
 
     console.log('Response status:', response.status);
