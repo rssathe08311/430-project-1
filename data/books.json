@@ -1111,7 +1111,9 @@
     "link": "",
     "pages": "785",
     "year": "2010",
-    "genres": "Apocalyptic"
+    "genres": [
+      "Apocalyptic"
+    ]
   },
   {
     "title": "test",
@@ -1121,6 +1123,46 @@
     "link": "3",
     "pages": "3",
     "year": "3223",
-    "genres": "test"
+    "genres": [
+      "test"
+    ]
+  },
+  {
+    "title": "The Silver Coin",
+    "author": "Walsh",
+    "country": "United States of America\n                ",
+    "language": "English",
+    "link": "",
+    "pages": "50",
+    "year": "2022",
+    "genres": [
+      "Horror"
+    ]
+  },
+  {
+    "title": "book with genre",
+    "author": "me",
+    "country": "United States of America\n                ",
+    "language": "English",
+    "link": "",
+    "pages": "12",
+    "year": "2024",
+    "genres": [
+      "Apocalyptic",
+      "Horror",
+      "Comedy"
+    ]
+  },
+  {
+    "title": "newBook",
+    "author": "test test",
+    "country": "United States of America\n                ",
+    "language": "English",
+    "link": "",
+    "pages": "2",
+    "year": "3223",
+    "genres": [
+      "Fiction"
+    ]
   }
 ]

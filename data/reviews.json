@@ -38,5 +38,15 @@
     "title": "fairy tales",
     "review": "does this work in lower case?",
     "rating": "5"
+  },
+  {
+    "title": "The Silver Coin",
+    "review": "The art is beautiful and the story chilling",
+    "rating": "4"
+  },
+  {
+    "title": "newBook",
+    "review": "wow it really is a new book",
+    "rating": "1"
   }
 ]

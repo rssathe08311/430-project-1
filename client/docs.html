@@ -68,6 +68,30 @@
 
     <div class="endpoint">
       <h2 class="collapsible">
+        /getGenres <span class="methods"><code>GET</code> <code>HEAD</code></span>
+      </h2>
+      <div class="content">
+        <div class="content-box">
+          <h3>Query Params</h3>
+          <p class="param"><code>genre</code> - The genre of books to filter by.</p>
+          <h3>Returns</h3>
+          <p class="param">A JSON array of books that match the specified genre.</p>
+          <h3>Examples</h3>
+          <section class="example">
+            <p>Request: <code>/api/getGenres?genre=Historical+Fiction</code></p>
+            <p>Result: <code>[{ author: 'Author Name', country: ['Country1'], language: 'English', link: 'http://example.com', pages: 300, title: 'Example Title', year: '2023', genres: ['Historical Fiction', 'Biography'] }]</code></p>
+          </section>
+          <section class="example">
+            <p>Request: <code>/api/getGenres?genre=Fantasy</code></p>
+            <p>Result: <code>[{ author: 'Another Author', country: ['Country2'], language: 'English', link: 'http://example.com/2', pages: 400, title: 'Another Title', year: '2022', genres: ['Fantasy', 'Adventure'] }]</code></p>
+          </section>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="endpoint">
+      <h2 class="collapsible">
         /getReviews <span class="methods"><code>GET</code></span>
       </h2>
       <div class="content">
@@ -97,7 +121,7 @@
           <p class="param"><code>year</code> - The publication year.</p>
           <p class="param"><code>country</code> - The country of origin.</p>
           <p class="param"><code>language</code> - The language of the book.</p>
-          <p class="param"><code>genres</code> - An array of genres.</p>
+          <p class="param"><code>genres</code> - An array of genres. Seperate genres by spaces.</p>
           <p class="param"><code>pages</code> - The number of pages.</p>
           <p class="param"><code>link</code> - A link to more information.</p>
           <h3>Returns</h3>

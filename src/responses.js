@@ -1,13 +1,24 @@
+// responses.js contains HTTP request handlers for a book API, handling book and review
+// retrieval, addition, and filtering, along with JSON data management and error handling
+
+// Import 'fs' module and utility functions
 const fs = require('fs');
 const utils = require('../data/utils.js');
 
+// Load client-side files (HTML and CSS)
 const index = fs.readFileSync(`${__dirname}/../client/client.html`);
 const style = fs.readFileSync(`${__dirname}/../client/style.css`);
 const docs = fs.readFileSync(`${__dirname}/../client/docs.html`);
 
+// Initialize an empty books array
 let books = [];
 
-// retrieves html page
+// getIndex
+// Serves the index HTML page.
+// Parameters:
+//   - request: The HTTP request object.
+//   - response: The HTTP response object.
+// Returns: None
 const getIndex = (request, response) => {
   response.writeHead(200, { 'Content-Type': 'text/html' });
 
@@ -18,6 +29,12 @@ const getIndex = (request, response) => {
   response.end();
 };
 
+// getDocs
+// Serves the documentation HTML page.
+// Parameters:
+//   - request: The HTTP request object.
+//   - response: The HTTP response object.
+// Returns: None
 const getDocs = (request, response) => {
   response.writeHead(200, { 'Content-Type': 'text/html' });
 
@@ -28,11 +45,21 @@ const getDocs = (request, response) => {
   response.end();
 };
 
+// setBooks
+// Updates the books array with a new array of books.
+// Parameters:
+//   - newBooksArray: The new array of books to replace the current one.
+// Returns: None
 const setBooks = (newBooksArray) => {
   books = newBooksArray;
 };
 
-// retrieves css file
+// getCSS
+// Serves the CSS file.
+// Parameters:
+//   - request: The HTTP request object.
+//   - response: The HTTP response object.
+// Returns: None
 const getCSS = (request, response) => {
   response.writeHead(200, { 'Content-Type': 'text/css' });
   if (request.method !== 'HEAD') {
@@ -41,6 +68,14 @@ const getCSS = (request, response) => {
   response.end();
 };
 
+// respondJSON
+// Sends a JSON response to the client with the given status and object.
+// Parameters:
+//   - request: The HTTP request object.
+//   - response: The HTTP response object.
+//   - status: The HTTP status code (e.g., 200, 404).
+//   - object: The object to be sent as a JSON response.
+// Returns: None
 const respondJSON = (request, response, status, object) => {
   const content = JSON.stringify(object);
   response.writeHead(status, {
@@ -54,6 +89,12 @@ const respondJSON = (request, response, status, object) => {
   response.end();
 };
 
+// notFound
+// Sends a 404 Not Found JSON response to the client.
+// Parameters:
+//   - request: The HTTP request object.
+//   - response: The HTTP response object.
+// Returns: None
 const notFound = (request, response) => {
   const responseJSON = {
     message: 'The page you are looking for was not found',
@@ -62,7 +103,14 @@ const notFound = (request, response) => {
   return respondJSON(request, response, 404, responseJSON);
 };
 
-// GET Requests
+// GET/HEAD Requests
+
+// getBooks
+// Retrieves a list of books, optionally limited by a query parameter.
+// Parameters:
+//   - request: The HTTP request object, which may contain a 'limit' query parameter.
+//   - response: The HTTP response object.
+// Returns: Sends a JSON response with the list of books or a limited number of books.
 const getBooks = (request, response) => {
   books = utils.getBooksJson();
   const limit = request.query.limit || books.length;
@@ -75,6 +123,12 @@ const getBooks = (request, response) => {
   return respondJSON(request, response, 200, responseJSON);
 };
 
+// getAuthor
+// Retrieves books by a specific author, specified by a query parameter.
+// Parameters:
+//   - request: The HTTP request object, containing the 'author' query parameter.
+//   - response: The HTTP response object.
+// Returns: Sends a JSON response with the books of the specified author or a 404 error if not found
 const getAuthor = (request, response) => {
   books = utils.getBooksJson();
   const author = request.query.author.toLowerCase();
@@ -108,6 +162,12 @@ const getAuthor = (request, response) => {
   return respondJSON(request, response, 200, { books: filteredBooks });
 };
 
+// getTitle
+// Retrieves books by a specific title, specified by a query parameter.
+// Parameters:
+//   - request: The HTTP request object, containing the 'title' query parameter.
+//   - response: The HTTP response object.
+// Returns: Sends a JSON response with the books matching the title or a 404 error if not found.
 const getTitle = (request, response) => {
   books = utils.getBooksJson();
   const title = request.query.title.toLowerCase();
@@ -132,11 +192,56 @@ const getTitle = (request, response) => {
   return respondJSON(request, response, 200, { books: filteredBooks });
 };
 
+// getGenres
+// Retrieves books by a specific genre, specified by a query parameter.
+// Parameters:
+//   - request: The HTTP request object, containing the 'genre' query parameter.
+//   - response: The HTTP response object.
+// Returns: Sends a JSON response with the books of the specified genre or a 404 error if not found.
+const getGenres = (request, response) => {
+  books = utils.getBooksJson();
+  const genre = request.query.genre ? request.query.genre.toLowerCase() : null;
+
+  if (!genre) {
+    const responseJSON = {
+      message: 'Genre query is empty. Please provide a valid genre.',
+      id: 'missingGenre',
+    };
+    return respondJSON(request, response, 400, responseJSON);
+  }
+
+  const filtBook = books.filter((b) => b.genres && b.genres.some((g) => g.toLowerCase() === genre));
+
+  if (filtBook.length === 0) {
+    const responseJSON = {
+      message: 'No books found for the specified genre.',
+      id: 'getGenres',
+    };
+    if (request.method === 'HEAD') {
+      return respondJSON(request, response, 404, {});
+    }
+
+    return respondJSON(request, response, 404, responseJSON);
+  }
+
+  if (request.method === 'HEAD') {
+    return respondJSON(request, response, 200, {});
+  }
+
+  return respondJSON(request, response, 200, { books: filtBook });
+};
+
+// getReviews
+// Retrieves reviews for a specific book title, specified by a query parameter.
+// Parameters:
+//   - request: The HTTP request object, containing the 'title' query parameter.
+//   - response: The HTTP response object.
+// Returns: Sends a JSON response with the reviews for the specified title,
+//          or all reviews if no title is provided.
 const getReviews = (request, response) => {
   const reviews = utils.getReviewsJson();
   const title = request.query.title.toLowerCase();
 
-  // Check for missing title parameter
   if (!title) {
     return respondJSON(request, response, 200, reviews);
   }
@@ -163,6 +268,14 @@ const getReviews = (request, response) => {
 };
 
 // POST Requests
+
+// addBook
+// Adds a new book to the books.json file, ensuring it doesn't already exist.
+// Parameters:
+//   - request: The HTTP request object, containing the new book data in the body.
+//   - response: The HTTP response object.
+// Returns: Sends a 201 status if the book is successfully added,
+// or relevant error status and messages if the book already exists or there are missing fields.
 const addBook = (request, response) => {
   const newBook = request.body;
   const booksFilePath = `${__dirname}/../data/books.json`;
@@ -199,7 +312,7 @@ const addBook = (request, response) => {
     link: newBook.link || '',
     pages: newBook.pages || 0,
     year: newBook.year,
-    genres: newBook.genres,
+    genres: newBook.genres.split(' '),
   });
 
   return new Promise((resolve, reject) => {
@@ -217,17 +330,24 @@ const addBook = (request, response) => {
 
       utils.setBooksJson(books);
 
-      // Send success response
       const responseJSON = {
         message: 'Book added successfully!',
         book: newBook,
       };
       respondJSON(request, response, 201, responseJSON);
-      resolve(); // Ensure the promise resolves
+      resolve();
     });
   });
 };
 
+// addReview
+// Adds a review for a specific book, saving it to reviews.json.
+// The book must exist for the review to be added.
+// Parameters:
+//   - request: The HTTP request object, containing the review data in the body.
+//   - response: The HTTP response object.
+// Returns: Sends a 201 status if the review is successfully added,
+//          or relevant error status if the book is not found or there are missing fields.
 const addReview = (request, response) => {
   const newReview = request.body;
   books = utils.getBooksJson();
@@ -266,8 +386,8 @@ const addReview = (request, response) => {
           id: 'internalError',
         };
         respondJSON(request, response, 500, responseJSON);
-        reject(err); // Reject the promise on error
-        return; // Exit the function
+        reject(err);
+        return;
       }
 
       const responseJSON = {
@@ -280,6 +400,7 @@ const addReview = (request, response) => {
   });
 };
 
+// Module exports for book-related API operations
 module.exports = {
   getIndex,
   getDocs,
@@ -287,6 +408,7 @@ module.exports = {
   getBooks,
   getAuthor,
   getTitle,
+  getGenres,
   getReviews,
   addBook,
   addReview,

@@ -1,4 +1,7 @@
 // HTML functionality
+// Initializes collapsible elements and adjusts box size dynamically after form submission.
+// Parameters: None
+// Returns: None
 document.addEventListener("DOMContentLoaded", function () {
   const collapsibles = document.querySelectorAll(".collapsible");
 
@@ -36,9 +39,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
+// handleResponse
+// Handles the response from fetch requests and updates the content area based on the status code.
+// Parameters:
+//   - response: The fetch response object.
+//   - parseResponse: A boolean indicating whether to parse the JSON response.
+//   - contentRef: The DOM element to update with the response message.
+// Returns: None
 const handleResponse = async (response, parseResponse, contentRef) => {
-  // const content = form.querySelector('.result');
   const content = contentRef;
   content.innerHTML = '';
 
@@ -78,7 +86,11 @@ const handleResponse = async (response, parseResponse, contentRef) => {
   }
 };
 
-// Function to handle GET and HEAD requests
+// requestUpdate
+// Handles GET and HEAD requests, constructing the URL and making the fetch call.
+// Parameters: 
+//   - form: The form element containing the request information.
+// Returns: None
 const requestUpdate = async (form) => {
   const method = form.querySelector('input[name="method"]:checked').value;
   const endpoint = form.getAttribute('data-endpoint');
@@ -104,7 +116,11 @@ const requestUpdate = async (form) => {
   }
 };
 
-// Function to handle POST requests - super broken rn
+// sendPost
+// Handles POST requests by gathering form data and sending it to the server.
+// Parameters: 
+//   - form: The form element containing the data to be sent.
+// Returns: None
 const sendPost = async (form) => {
   const endpoint = form.getAttribute('data-endpoint');
   const url = form.getAttribute('action');
@@ -154,6 +170,10 @@ const sendPost = async (form) => {
   }
 };
 
+// init
+// Initializes form submission event listeners for GET, HEAD, and POST requests.
+// Parameters: None
+// Returns: None
 const init = () => {
   document.querySelectorAll('form[data-method="GET"], form[data-method="POST"]').forEach((form) => {
     form.addEventListener('submit', (e) => {
@@ -170,4 +190,5 @@ const init = () => {
   });
 };
 
+// Window onload event to initialize the application.
 window.onload = init;

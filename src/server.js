@@ -1,13 +1,24 @@
+// server.js implements an HTTP server for managing a book and review API,
+// handling requests to load, parse, and store book and review data while
+// providing routes for adding and retrieving books and reviews.
+
+// Import 'fs' module and http module and responses.js/utils.js functions
 const http = require('http');
 const fs = require('fs');
 const responseHandler = require('./responses.js');
-
-const clientScript = fs.readFileSync(`${__dirname}/../client/client.js`);
 const utils = require('../data/utils.js');
+
+// Store a refrence to client.js
+const clientScript = fs.readFileSync(`${__dirname}/../client/client.js`);
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
-// load books.json to booksJson
+// Load Books and Reviews
+// This section loads books and reviews data from JSON files into the application.
+// It reads the 'books.json' and 'reviews.json' files and updates the application's
+// state with their contents.
+// parameters: None
+// return: None
 fs.readFile(`${__dirname}/../data/books.json`, 'utf8', (err, data) => {
   if (err) {
     console.error('Error loading data: ', err);
@@ -17,7 +28,6 @@ fs.readFile(`${__dirname}/../data/books.json`, 'utf8', (err, data) => {
   utils.setBooksJson(booksArray);
 });
 
-// Load reviews.json to reviewsJson
 fs.readFile(`${__dirname}/../data/reviews.json`, 'utf8', (err, data) => {
   if (err) {
     console.error('Error loading data: ', err);
@@ -27,6 +37,13 @@ fs.readFile(`${__dirname}/../data/reviews.json`, 'utf8', (err, data) => {
   utils.setReviewsJson(reviewsArray);
 });
 
+// parseBookBody
+// Parses the body of an incoming request to extract book data and attaches it to the request object
+// Parameters:
+//   - request: The HTTP request object.
+//   - response: The HTTP response object.
+//   - handler: A callback function to handle the parsed data.
+// Returns: None
 const parseBookBody = (request, response, handler) => {
   const body = [];
 
@@ -56,6 +73,7 @@ const parseBookBody = (request, response, handler) => {
       }
     }
 
+    // Format for books.json as refrence
     /* "author": "Chinua Achebe",
     "country": "Nigeria",
     "language": "English",
@@ -83,6 +101,13 @@ const parseBookBody = (request, response, handler) => {
   });
 };
 
+// parseReviewBody
+// Parse the body of an incoming request to extract data and attaches it to the request object.
+// Parameters:
+//   - request: The HTTP request object.
+//   - response: The HTTP response object.
+//   - handler: A callback function to handle the parsed data.
+// Returns: None
 const parseReviewBody = (request, response, handler) => {
   const body = [];
 
@@ -122,6 +147,13 @@ const parseReviewBody = (request, response, handler) => {
   });
 };
 
+// handleGetHead
+// Handles GET and HEAD requests by invoking the appropriate response based on the URL.
+// Parameters:
+//   - request: The HTTP request object.
+//   - response: The HTTP response object.
+//   - parsedUrl: The parsed URL object for the request.
+// Returns: None
 const handleGetHead = (request, response, parsedUrl) => {
   if (parsedUrl.pathname === '/' || parsedUrl.pathname === '/client.html') {
     responseHandler.getIndex(request, response);
@@ -130,7 +162,6 @@ const handleGetHead = (request, response, parsedUrl) => {
   } else if (parsedUrl.pathname === '/style.css') {
     responseHandler.getCSS(request, response);
   } else if (parsedUrl.pathname === '/getBooks') {
-    console.log(request.query);
     responseHandler.getBooks(request, response);
   } else if (parsedUrl.pathname === '/getAuthor') {
     responseHandler.getAuthor(request, response);
@@ -140,6 +171,8 @@ const handleGetHead = (request, response, parsedUrl) => {
     response.end();
   } else if (parsedUrl.pathname === '/getTitle') {
     responseHandler.getTitle(request, response);
+  } else if (parsedUrl.pathname === '/getGenres') {
+    responseHandler.getGenres(request, response);
   } else if (parsedUrl.pathname === '/getReviews') {
     responseHandler.getReviews(request, response);
   } else {
@@ -147,6 +180,13 @@ const handleGetHead = (request, response, parsedUrl) => {
   }
 };
 
+// handlePost
+// Handles POST requests by parsing the body of the request and routing it to the correct handler.
+// Parameters:
+//   - request: The HTTP request object.
+//   - response: The HTTP response object.
+//   - parsedUrl: The parsed URL object for the request.
+// Returns: None
 const handlePost = (request, response, parsedUrl) => {
   if (parsedUrl.pathname === '/addBook') {
     parseBookBody(request, response, responseHandler.addBook);
@@ -157,6 +197,12 @@ const handlePost = (request, response, parsedUrl) => {
   }
 };
 
+// onRequest
+// Main request handler for incoming HTTP requests. Routes based on the request method and URL.
+// Parameters:
+//   - request: The HTTP request object.
+//   - response: The HTTP response object.
+// Returns: None
 const onRequest = (request, response) => {
   const protocol = request.connection.encrypted ? 'https' : 'http';
   const parsedUrl = new URL(request.url, `${protocol}://${request.headers.host}`);
@@ -172,6 +218,10 @@ const onRequest = (request, response) => {
   }
 };
 
+// Server Creation
+// Initializes and starts the HTTP server, listening for incoming requests on the specified port.
+// Parameters: None
+// Returns: None
 http.createServer(onRequest).listen(port, () => {
   console.log(`Listening on 127.0.0.1: ${port}`);
 });
